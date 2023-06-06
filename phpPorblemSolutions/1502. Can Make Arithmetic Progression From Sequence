@@ -1,0 +1,24 @@
+class Solution {
+
+    /**
+     * @param Integer[] $arr
+     * @return Boolean
+     */
+    function canMakeArithmeticProgression($arr) {
+        $size = count($arr);
+          
+           if($size == 2) return true;
+           rsort($arr);
+
+           $diff= $arr[0] - $arr[1];
+
+             for($i=1;$i<$size;$i++){
+                 $j=$i+1;
+                 if($j<$size){
+                     if($diff!=($arr[$i]-$arr[$j])) return false;
+                 }
+             }
+             return true;
+
+    }
+}
