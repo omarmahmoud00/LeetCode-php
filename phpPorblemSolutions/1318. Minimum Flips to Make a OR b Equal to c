@@ -1,0 +1,60 @@
+class Solution {
+
+    /**
+     * @param Integer $a
+     * @param Integer $b
+     * @param Integer $c
+     * @return Integer
+     */
+    function minFlips($a, $b, $c) {
+        $binA = decbin($a);
+        $binB = decbin($b);
+        $binC = decbin($c);
+        $flips = 0;
+        $i= strlen($binA);
+        $j= strlen($binB);
+        $k= strlen($binC);
+        $z=max($i, $j, $k);
+        for($x=0;$x<$z;$x++){
+
+             if($i!=$z){
+                  $binA= '0'. $binA;
+                   $i++;
+             }
+             if($j!=$z){
+                  $binB= '0'. $binB;
+                   $j++;
+             }
+             if($k!=$z) {
+                  $binC= '0'. $binC;
+                   $k++;
+             }
+
+        }
+         $i--;
+         $k--;
+         $j--;
+         
+                while($j>=0&&$i>=0&&$k>=0){
+
+                      
+                     if($binC[$k]==0){
+
+                          if($binA[$i]!=0) $flips++;
+                          if($binB[$j]!=0) $flips++;
+
+                     }else if($binC[$k]==1){
+
+                          if($binA[$i]==1||$binB[$j]==1) $flips = $flips;
+                          else $flips++;
+                     }
+                     $i--;
+                     $j--;
+                     $k--;
+
+
+                }
+        return $flips;
+
+    }
+}
