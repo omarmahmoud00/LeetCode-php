@@ -1,0 +1,31 @@
+class Solution {
+
+    /**
+     * @param String $s
+     * @return String
+     */
+    function removeStars($s) {
+        $s = array();
+        $length = strlen($s);
+        $output='';
+        $stars=0;
+          
+          while (!empty($s)) {
+              $element = array_pop($s);
+                   if($element!='*' && $stars==0){
+                       $output= $element . $output;
+
+                   } else if($element=='*'){
+                       $stars++;
+
+                   }else{
+                       $stars--;
+                   }
+
+             
+                }
+
+          return $output;      
+ 
+    }
+}
