@@ -1,0 +1,39 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return NULL
+     */
+    function moveZeroes(&$nums) {
+
+        $size = count($nums);
+        $zeros= 0;
+        $nonZeros =[];
+        $j=0;
+         
+          for($i=0;$i<$size;$i++){
+
+               if($nums[$i]==0) $zeros ++;
+               if($nums[$i]!=0) {$nonZeros[$j]=$i;
+               $j++;}
+                
+          }
+          if($zeros==0||$zeros==$size) return $nums;
+          
+ 
+             $k=0;
+              for($i=0;$i<count($nonZeros);$i++){
+
+                  $nums[$i]=$nums[$nonZeros[$i]];
+
+                  }
+                   
+                  while($zeros!=0){
+                        $nums[$i]=0;
+                        $i++;
+                        $zeros--;
+                  }
+                  return $nums;
+    }
+
+}
