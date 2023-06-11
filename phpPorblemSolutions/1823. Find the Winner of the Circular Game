@@ -1,0 +1,29 @@
+class Solution {
+
+    /**
+     * @param Integer $n
+     * @param Integer $k
+     * @return Integer
+     */
+     
+    function findTheWinner($n, $k) {
+        $newqueue = new SplQueue();
+
+        for($i=1;$i<=$n;$i++){
+            $newqueue->enqueue($i);
+        }
+
+        while($newqueue->count()!=1){
+            for($i=($k-1);$i>0;$i--){
+                  $newqueue->enqueue($newqueue->dequeue());  
+            }
+            $newqueue->dequeue();
+        }
+
+           return $newqueue->dequeue();
+
+ 
+      
+     
+    }
+}
