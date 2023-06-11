@@ -1,0 +1,42 @@
+class Solution {
+
+    /**
+     * @param Integer[] $tickets
+     * @param Integer $k
+     * @return Integer
+     */
+    function timeRequiredToBuy($tickets, $k) {
+          
+          $size= count($tickets);
+          if($size==1)return $tickets[0];
+          
+          $time=0;
+          $newqueue = new SplQueue();
+          for($i=0;$i<$size;$i++){
+              $newqueue->enqueue($tickets[$i]);
+          }
+
+          while(!$newqueue->isEmpty()){ 
+                 
+            for($i=0;$i<$size;$i++){
+             if (!$newqueue->isEmpty()&&$tickets[$i]!=0 ){
+
+                   $newqueue->dequeue(); 
+                   $tickets[$i]--;
+                   $newqueue->enqueue($tickets[$i]);
+                      $time++; 
+             }else{
+                 unset($tickets[$i]);
+             }  
+             
+             if($newqueue->count()==1) return ($time+ $newqueue->dequeue());
+             if($tickets[$k]==0) return ($time);
+               
+               
+
+                } 
+
+          }
+        return $time;
+    }
+}
