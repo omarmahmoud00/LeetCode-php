@@ -1,0 +1,43 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return String[]
+     */
+    function summaryRanges($nums) {
+        $smallestSortedList = array();
+        $size = count($nums);
+        $k=0;
+        $i=0;
+       
+
+           while($i<$size){
+            $range=0;
+            $started_i = $i;
+             for($j=$i+1;$j<$size;$j++){
+                 if(($nums[$i]+1)==$nums[$j]){
+                        
+                         $range++; 
+                         $i=$j;
+                  }else{
+                      break;
+                  }
+
+             }
+
+              if($range!=0){
+                   $smallestSortedList[$k] = $nums[$started_i].'->'. $nums[$i];   
+                      
+                  }
+               else{
+                   $smallestSortedList[$k] = "$nums[$started_i]";
+               }    
+               $k++;
+               $i=$j;
+                  
+           }
+
+           return $smallestSortedList; 
+        
+    }
+}
