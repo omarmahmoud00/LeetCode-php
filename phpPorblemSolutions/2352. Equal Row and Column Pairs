@@ -1,0 +1,55 @@
+class Solution {
+
+    /**
+     * This function calculates the number of equal pairs in a grid.
+     *
+     * @param Integer[][] $grid The input grid.
+     * @return Integer The number of equal pairs.
+     */
+    function equalPairs($grid) {
+        $size = count($grid); // Get the size of the grid.
+        $rows = array(); // Array to store the sum of each row.
+        $columns = array(); // Array to store the sum of each column.
+        $equals = 0; // Counter for equal pairs.
+
+        // Calculate the sum of each row and column.
+        for($i = 0; $i < $size; $i++){
+            for($j = 0; $j < $size; $j++){
+                $rows[$i] += $grid[$i][$j];
+                $columns[$i] += $grid[$j][$i];
+            } 
+        }
+
+        // Check for equal pairs.
+        for($i = 0; $i < $size; $i++){
+            for($j = 0; $j < $size; $j++){
+                if($rows[$i] == $columns[$j]){
+                    // If the row sum is equal to the column sum, check if the values in the corresponding row and column are equal.
+                    if ($this->check($grid, $i, $j, $size)){
+                        $equals++; // Increment the counter if the values are equal.
+                    }
+                }
+            } 
+        }
+
+        return $equals; // Return the number of equal pairs.
+    }
+
+    /**
+     * This function checks if all values in a given row and column are equal.
+     *
+     * @param Integer[][] $grid The input grid.
+     * @param int $row The row index.
+     * @param int $column The column index.
+     * @param int $size The size of the grid.
+     * @return bool Returns true if all values in the row and column are equal, false otherwise.
+     */
+    function check($grid, $row, $column, $size){
+        for($i = 0; $i < $size; $i++){
+            if($grid[$row][$i] != $grid[$i][$column]){
+                return false; // If any value in the row and column is not equal, return false.
+            }
+        } 
+        return true; // If all values in the row and column are equal, return true.
+    }
+}
