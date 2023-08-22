@@ -1,0 +1,30 @@
+class Solution {
+
+    /**
+     * @param Integer $columnNumber
+     * @return String
+     */
+    function convertToTitle($columnNumber) {
+
+        $alphabetIndex =[ "A","B","C","D","E","F",
+                          "G","H","I","J", "K","L",
+                          "M","N","O","P","Q","R","S",
+                          "T","U","V","W","X","Y","Z"];
+        $title = '';                  
+
+         if($columnNumber<=26){
+                 return $alphabetIndex[$columnNumber-1];
+         } else{
+             while($columnNumber>0){
+
+                 $title =  $alphabetIndex[(($columnNumber-1)%26)] .$title ;
+                 $columnNumber =intdiv($columnNumber-1,26);
+             }
+             return $title;
+
+         }          
+
+
+        
+    }
+}
