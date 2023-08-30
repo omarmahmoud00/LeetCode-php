@@ -1,0 +1,35 @@
+/**
+ * Definition for a singly-linked list.
+ * class ListNode {
+ *     public $val = 0;
+ *     public $next = null;
+ *     function __construct($val = 0, $next = null) {
+ *         $this->val = $val;
+ *         $this->next = $next;
+ *     }
+ * }
+ */
+class Solution {
+
+    /**
+     * @param ListNode $head
+     * @return ListNode
+     */
+    function swapPairs($head) {
+        $temp = $head;
+         $temp2 =$temp->next;
+ 
+          
+           while($temp2!=null && $temp->next !== null){
+                      
+                     $val = $temp2->val;
+                     $temp2->val =$temp->val;
+                     $temp->val = $val;
+                     $temp = $temp2->next; 
+                     $temp2 =$temp->next;
+
+             
+           }
+        return $head;
+    }
+}
