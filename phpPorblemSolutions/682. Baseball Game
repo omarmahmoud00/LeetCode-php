@@ -1,0 +1,37 @@
+class Solution {
+
+    /**
+     * @param String[] $operations
+     * @return Integer
+     */
+    function calPoints($operations) {
+        $stack = new SplStack();
+
+         foreach($operations as $oper){
+             if($oper=="C"){
+                 $stack->pop();
+             } else if($oper=="D"){ 
+                 $stack->push((2 * $stack->top()));
+             } else if($oper=="+"){
+                 $num = $stack->pop();
+                 $num2= $stack->top();
+                 $stack->push($num);
+                 $stack->push(($num+$num2));
+
+             }else{
+                 $stack->push(intval($oper));
+             }
+         }
+
+         return $this->sum($stack);
+
+    }
+
+    private function sum($stack){
+
+        if($stack->isEmpty()) return 0 ;
+         
+
+        return $stack->pop() + $this->sum($stack);
+    }
+}
