@@ -1,0 +1,19 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function findDuplicate($nums) {
+        $size = count($nums);
+        sort($nums); 
+        for($i=0;$i<$size;$i++){
+          if($i+1<$size){
+              if($nums[$i]==$nums[$i+1]) return $nums[$i];
+          }
+        }
+
+        return 0 ;
+
+    }
+}
