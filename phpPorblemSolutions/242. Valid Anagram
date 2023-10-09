@@ -1,0 +1,42 @@
+class Solution {
+
+    /**
+     * @param String $s
+     * @param String $t
+     * @return Boolean
+     */
+    function isAnagram($s, $t) {
+        $sizeOf_S = strlen($s);
+        $sizeOf_T = strlen($t);
+        $map = array();
+
+        if($sizeOf_S!=$sizeOf_T) return false;
+
+            for ($index = 0; $index < $sizeOf_S; $index++) {
+                   $this->check($map,$s[$index]);
+                 
+           }
+
+           for ($index = 0; $index < $sizeOf_T; $index++) {
+                 if(array_key_exists($t[$index],$map)){
+                     $map[($t[$index])]--;
+                     if($map[($t[$index])]<0) return false;
+                 }else {
+                     return false;
+                 }
+                 
+           }
+
+           return true;
+
+        
+    }
+
+    private function check(&$map, $char) {
+        if (array_key_exists($char, $map)) {
+            $map[$char]++;
+        } else {
+            $map[$char] = 1;
+        }
+    }
+}
