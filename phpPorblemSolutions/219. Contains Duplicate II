@@ -1,0 +1,34 @@
+class Solution {
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Boolean
+     */
+    function containsNearbyDuplicate($nums, $k) {
+        $map = array();
+        $size = count($nums); 
+        
+        for ($i = 0; $i < $size; $i++) {
+            $this->setInMap($map, $nums[$i], $i);   
+        }
+
+        foreach ($map as $m) {
+            $size = count($m);
+            $i = 0;
+            while (($i + 1) < $size) {
+                if (abs($m[$i] - $m[$i+1]) <= $k) return true;
+                $i++;
+            }
+        }
+        
+        return false;
+    }
+
+    private function setInMap(&$map, $num, $index) {
+        if (isset($map[$num])) {   
+            $map[$num][] = $index;
+        } else {
+            $map[$num] = array($index);
+        }
+    }
+}
