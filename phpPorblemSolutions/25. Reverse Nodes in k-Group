@@ -1,0 +1,35 @@
+class Solution {
+    /**
+     * @param ListNode $head
+     * @param Integer $k
+     * @return ListNode
+     */
+    function reverseKGroup($head, $k) {
+        if ($k == 1) return $head;  
+
+        $temp1 = $head;
+        $anchor = new ListNode(0, $head);
+        $temp2 = $anchor;  
+        $i = 0;
+        $array = array();
+         
+        while ($temp1 != null) {
+            array_push($array, $temp1->val);
+            $i++;
+            $temp1 = $temp1->next;
+
+            if ($i == $k) {
+                while (!empty($array)) {
+                    $val = array_pop($array);  
+                    $temp2->next->val = $val; 
+                    $temp2 = $temp2->next; 
+                }
+                $i = 0;
+            }
+        }
+
+        return $anchor->next;  
+    }
+
+   
+}
