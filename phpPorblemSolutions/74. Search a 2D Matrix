@@ -1,0 +1,84 @@
+class Solution {
+
+    /**
+     * @param Integer[][] $matrix
+     * @param Integer $target
+     * @return Boolean
+     */
+    function searchMatrix($matrix, $target) {
+        $number_of_rows = count($matrix);
+        $number_of_columns = count($matrix[0]);
+
+        // check if the target is in range of matrix or not
+       if(!$this->isInTheRange($target ,$matrix[0][0],$matrix[($number_of_rows-1)][($number_of_columns-1)])){
+            return false;
+        }
+
+        // we have one or two row so we send the rows with no need to check the columns
+        if($number_of_rows <= 2){
+            for($i=0;$i<$number_of_rows;$i++){
+                 if($this->isInTheRange($target, $matrix[$i][0],$matrix[$i][($number_of_columns-1)])){
+                     if($this->search( array_column($matrix, $i),$target,$number_of_columns)) return true;
+                 }
+
+            }
+        } 
+
+        // we have one or two columns so we send the rows with no need to check the row
+        if($number_of_columns <=2){
+            for($i=0;$i<$number_of_columns;$i++){
+                 if($this->isInTheRange($target, $matrix[$i][0],$matrix[$i][($number_of_rows-1)])){
+                     if($this->search($matrix[$i],$target,$number_of_rows)) return true;
+                 }
+
+            }
+        }
+
+          	for($i=0;$i<$number_of_rows;$i++){
+                  if($this->isInTheRange($target,$matrix[$i][0],$matrix[$i][$number_of_columns-1])){
+                     if($this->search($matrix[$i],$target,$number_of_columns)) return true;
+                      
+                  } 
+              }
+
+          for($j=0;$j<$number_of_columns;$j++){
+                 if($this->isInTheRange($target,$matrix[0][$j],$matrix[$number_of_rows-1][$j])){
+                  if($this->search( array_column($matrix, $j),$target,$number_of_rows)) return true;
+ 
+                  }
+                }
+
+                return false;     
+
+    }
+
+    private function isInTheRange($target, $min, $max) {
+        return $target >= $min && $target <= $max;
+    }
+
+
+    private function search($array , $target,$size){
+
+          $low = 0;
+          $high = $size- 1;
+      
+            while ($low <= $high) {
+                
+                $mid = floor(($low + $high) / 2);
+        
+                if($array[$mid] == $target) {
+                    return true;
+                }
+        
+                if ($target < $array[$mid]) {
+                    $high = $mid -1;
+                }
+                else {
+                
+                    $low = $mid + 1;
+                }
+
+            }
+          return   false;
+    }
+}
