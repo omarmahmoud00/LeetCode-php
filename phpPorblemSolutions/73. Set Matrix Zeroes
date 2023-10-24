@@ -1,0 +1,44 @@
+class Solution {
+
+    /**
+     * @param Integer[][] $matrix
+     * @return NULL
+     */
+    function setZeroes(&$matrix) {
+        $numOfRows = count($matrix);
+        $numOfColumns = count($matrix[0]); 
+        $ZeroRows = array();  
+        $ZeroColumns = array();  
+        
+        for($i = 0; $i < $numOfRows; $i++){
+            for($j = 0; $j < $numOfColumns; $j++){
+                if($matrix[$i][$j] == 0){
+                    $this->check($ZeroRows, $i);  
+                    $this->check($ZeroColumns, $j);  
+                }
+            }
+        }
+
+        while(!empty($ZeroRows)){
+            $index = array_pop($ZeroRows);
+            for($j = 0; $j < $numOfColumns; $j++){
+                $matrix[$index][$j] = 0;
+            }
+        }
+
+        while(!empty($ZeroColumns)){
+            $index = array_pop($ZeroColumns);
+            for($i = 0; $i < $numOfRows; $i++){  
+                $matrix[$i][$index] = 0;
+            }
+        }
+    }
+
+    private function check(&$array, $index){
+        $size = count($array);
+        for($i = 0; $i < $size; $i++){
+            if($array[$i] == $index) return;
+        }
+        $array[] = $index;  
+    }
+}
