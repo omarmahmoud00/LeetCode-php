@@ -1,0 +1,28 @@
+class Solution {
+
+    /**
+     * @param Integer $x
+     * @return Integer
+     */
+    function mySqrt($x) {
+        $expectedRoot = floor($x/2) ;
+
+          while(true){
+          if($x==($expectedRoot*$expectedRoot)) return floor( $expectedRoot);
+           $expectedRoot= floor($expectedRoot/2);
+          if($x>($expectedRoot*$expectedRoot)){
+              while($x>($expectedRoot*$expectedRoot)){
+                  $expectedRoot++;
+
+                 
+              }
+          if($x==($expectedRoot*$expectedRoot)) return floor($expectedRoot);
+
+              return floor(--$expectedRoot);
+          }
+
+
+          }
+
+    }
+}
