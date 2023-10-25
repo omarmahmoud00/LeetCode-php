@@ -1,0 +1,21 @@
+class Solution {
+
+    /**
+     * @param Integer $n
+     * @return Integer
+     */
+    function trailingZeroes($n) {
+        // the idea is to find the trailing zeroes is to find how many 10 in the n! 
+        // to find how many 10 , you find the factorial of 10 which 5 and 2 so 
+        // finding how many 5 is key anwser . you find an article dicuess the idea here 
+        // https://www.purplemath.com/modules/factzero.htm
+          $count = 0;
+            while ($n >= 5) {
+                $count += intdiv($n, 5);
+                $n /= 5;
+            }
+
+            return $count;
+
+    }
+}
