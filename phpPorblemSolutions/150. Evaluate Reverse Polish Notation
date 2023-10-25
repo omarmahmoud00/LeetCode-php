@@ -1,0 +1,37 @@
+class Solution {
+
+    /**
+     * @param String[] $tokens
+     * @return Integer
+     */
+    function evalRPN($tokens) {
+        $stack = array();
+        $length = count($tokens);
+          for($i=0;$i<$length;$i++){
+              $element =  ($tokens[$i]);
+              if($element=='+'||$element=='*'||$element=='-'||$element=='/'){
+                 $num2 = array_pop($stack); 
+                $num1 = array_pop($stack);
+                $result =$this->oper( $element, $num1,$num2);
+                  array_push($stack,$result);
+              }else{
+                  array_push($stack,$element);
+              }
+          }
+          return (array_pop($stack));
+    }
+
+    private function oper($operation, $num1, $num2){ 
+     switch ($operation) {
+            case '+':
+                return $num2 + $num1;
+            case '-':
+                return $num1 - $num2;
+            case '*':
+                return $num2 * $num1; 
+           
+            default:   return intval($num1 / $num2);
+}
+    }
+
+}
