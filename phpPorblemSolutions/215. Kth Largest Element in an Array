@@ -1,0 +1,29 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Integer
+     */
+    function findKthLargest($nums, $k) {
+       $maxHeap = new MaxHeap();
+       $size = count($nums);
+       for($i=0;$i<$size;$i++){
+           $maxHeap->insert($nums[$i]);
+       }
+
+       while($k>1){
+            $maxHeap->extract();
+            $k--;
+       }
+        return $maxHeap->extract(); 
+
+
+    }
+}
+
+class MaxHeap extends SplHeap {
+    protected function compare($value1, $value2) {
+        return $value1 - $value2;  
+    }
+}
