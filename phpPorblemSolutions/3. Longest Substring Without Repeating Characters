@@ -1,0 +1,44 @@
+class Solution {
+
+    /**
+     * @param String $s
+     * @return Integer
+     */
+    function lengthOfLongestSubstring($s) {
+        $length = strlen($s);
+        if($length<2) return $length;
+        $longSub = 0;
+          for ($i = 0; $i < $length; $i++) {
+                 $oldLongSub = 1;
+                 $k = 0;   
+                 $array = array();
+                 $array[0] =$s[$i];
+                for ($j = ($i+1); $j < $length; $j++) {
+                    if(!$this->checkAndAdd($array,$s[$j])) break;
+                    else{
+                        $k++;
+                        $array[$k] = $s[$j];
+                        $oldLongSub++;
+                    }
+                }
+
+                if($oldLongSub>$longSub) $longSub = $oldLongSub;
+
+
+                if($longSub>($length-$i)) break;
+
+            }
+
+            return $longSub;
+
+
+    }
+
+    private function checkAndAdd($array,$char){
+            foreach($array as $element){
+                if($element===$char) return false;
+            }
+
+            return true;
+    }
+}
