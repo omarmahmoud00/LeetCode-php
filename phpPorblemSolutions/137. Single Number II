@@ -11,7 +11,11 @@ class Solution {
         for($i=0;$i<$size;$i++){
             $this->checkAndSet($array,$nums[$i]);
         }
-        return array_search(1, $array); 
+        // $size2= count($array);
+       foreach ($array as $key=> $value) {
+            if($value==1) return $key;
+            }
+         
     }
 
     private function checkAndSet(&$array,$num){
