@@ -1,0 +1,32 @@
+class Solution {
+
+    /**
+     * @param TreeNode $root
+     * @return Float[]
+     */
+    function averageOfLevels($root) {
+        $queue = [];
+        array_push($queue, $root);  
+        $ans = [];
+
+        while (!empty($queue)) {
+            $currentLevelCount = count($queue);
+            $current = 0;  
+
+            for ($i = 0; $i < $currentLevelCount; $i++) {
+                $node = array_shift($queue);  
+                $current += $node->val;  
+
+                if ($node->left !== null) {
+                    array_push($queue, $node->left);
+                }
+                if ($node->right !== null) {
+                    array_push($queue, $node->right);
+                }
+            }
+            $ans[] = $current / $currentLevelCount;  
+        }
+
+        return $ans;
+    }
+}
