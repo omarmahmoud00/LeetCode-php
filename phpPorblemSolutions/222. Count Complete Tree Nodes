@@ -1,0 +1,32 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     public $val = null;
+ *     public $left = null;
+ *     public $right = null;
+ *     function __construct($val = 0, $left = null, $right = null) {
+ *         $this->val = $val;
+ *         $this->left = $left;
+ *         $this->right = $right;
+ *     }
+ * }
+ */
+class Solution {
+    private $count=0;
+    
+    /**
+     * @param TreeNode $root
+     * @return Integer
+     */
+    function countNodes($root) {
+        $this->traverseAndCount($root);
+        return $this->count;
+    }
+    
+    function traverseAndCount($node) {
+        if($node == null) return;
+        $this->count++;
+        $this->traverseAndCount($node->left);
+        $this->traverseAndCount($node->right);
+    }
+}
