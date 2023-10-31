@@ -1,0 +1,52 @@
+class Solution {
+    function searchRange($nums, $target) {
+        $size  = count($nums);
+        if($size < 1) return [-1,-1];
+
+        $result = $this->binarySearch($nums, $target, $size);
+
+        if($result === false || $nums[$result] != $target) {
+            return [-1,-1];
+        } else {
+            $start = $this->findFirst($nums, $result, $target);
+            $end = $this->findLast($nums, $result, $size, $target);
+            return [$start, $end];
+        }
+    }
+
+    private function findFirst($arr, $start, $target) {
+        $i = $start;
+        while($i >= 0 && $arr[$i] == $target) {
+            $i--;
+        }
+        return ($i + 1);
+    }
+
+    private function findLast($arr, $end, $size, $target) {
+        $i = $end;
+        while($i < $size && $arr[$i] == $target) {
+            $i++;
+        }
+        return ($i - 1);
+    }
+
+    private function binarySearch($arr, $target, $size) {
+        $low = 0;
+        $high = $size - 1;
+        
+        while ($low <= $high) {
+            $mid = floor(($low + $high) / 2);
+            
+            if($arr[$mid] == $target) {
+                return $mid;
+            }
+            
+            if ($target < $arr[$mid]) {
+                $high = $mid - 1;
+            } else {
+                $low = $mid + 1;
+            }
+        }
+        return false;
+    }
+}
