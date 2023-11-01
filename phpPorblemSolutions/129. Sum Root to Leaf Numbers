@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     public $val = null;
+ *     public $left = null;
+ *     public $right = null;
+ *     function __construct($val = 0, $left = null, $right = null) {
+ *         $this->val = $val;
+ *         $this->left = $left;
+ *         $this->right = $right;
+ *     }
+ * }
+ */
+class Solution {
+
+    /**
+     * @param TreeNode $root
+     * @return Integer
+     */
+    function sumNumbers($root) {
+        $sum = 0 ;
+        $this->dfsSum($root,$sum,'');
+        return $sum;
+        
+    }
+
+   private function dfsSum($root,&$sum,$sumOfPath=''){
+       if($root==null) return;
+
+       $sumOfPath = $sumOfPath.$root->val;
+       if(!$root->left && !$root->right){
+           $sum = $sum+ (int)$sumOfPath;
+           return;
+       }
+       $this->dfsSum($root->left,$sum,$sumOfPath);
+       $this->dfsSum($root->right,$sum,$sumOfPath);
+   }
+
+}
