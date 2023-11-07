@@ -1,0 +1,36 @@
+class Solution {
+    /**
+     * @param TreeNode $root
+     * @return Integer[]
+     */
+    function rightSideView($root) {
+        $result = [];
+        if ($root === null) {
+            return $result;
+        }
+
+        $queue = new SplQueue();
+        $queue->enqueue($root);
+
+        while (!$queue->isEmpty()) {
+            $size = $queue->count();
+            for ($i = 0; $i < $size; $i++) {
+                $node = $queue->dequeue();
+ 
+                if ($i == $size - 1) {
+                    $result[] = $node->val;
+                }
+ 
+                if ($node->left !== null) {
+                    $queue->enqueue($node->left);
+                }
+                if ($node->right !== null) {
+                    $queue->enqueue($node->right);
+                }
+                
+            }
+        }
+
+        return $result;
+    }
+}
