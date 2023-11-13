@@ -1,0 +1,39 @@
+class Solution {
+
+    private $longest = 0;
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function longestConsecutive($nums) {
+        $size = count($nums);
+        $max=$size/2;
+        if ($size == 0) return 0;
+        if ($size == 1) return 1;
+
+        
+        $numSet = [];
+        foreach ($nums as $num) {
+            $numSet[$num] = true;
+        }
+
+        foreach ($nums as $num) {
+            if (!isset($numSet[$num - 1])) {  
+                $this->findNumberOfSequence($numSet, $num);
+                if($this->longest>($max)) return $this->longest;
+            }
+        }
+        return $this->longest;
+    }
+
+    private function findNumberOfSequence($numSet, $element) {
+        $long = 0;
+        while (isset($numSet[$element])) {
+            $element++;
+            $long++;
+        }
+        $this->longest = max($this->longest, $long);
+    }
+}
+
