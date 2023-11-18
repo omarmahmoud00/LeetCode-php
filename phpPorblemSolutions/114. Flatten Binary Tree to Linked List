@@ -1,0 +1,31 @@
+class Solution {
+
+    /**
+     * @param TreeNode $root
+     * @return NULL
+     */
+    function flatten($root) {
+        $stack = new SplStack();
+        $stack->push($root);
+        
+        $linked_list = new TreeNode();
+        $current = $linked_list;
+        
+        while (!$stack->isEmpty()) {
+            $node = $stack->pop();
+            
+            if ($node == null) {
+                continue;
+            }
+            
+            $stack->push($node->right);
+            $stack->push($node->left);
+            
+            $current->left = null;
+            $current->right = $node;
+            $current = $node;
+        }
+        
+        $root = $linked_list->next;
+    }
+}
