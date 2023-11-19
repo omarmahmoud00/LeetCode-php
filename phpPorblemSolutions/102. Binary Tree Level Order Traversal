@@ -1,0 +1,41 @@
+/**
+ * Definition for a binary tree node.
+ * class TreeNode {
+ *     public $val = null;
+ *     public $left = null;
+ *     public $right = null;
+ *     function __construct($val = 0, $left = null, $right = null) {
+ *         $this->val = $val;
+ *         $this->left = $left;
+ *         $this->right = $right;
+ *     }
+ * }
+ */
+class Solution {
+
+    /**
+     * @param TreeNode $root
+     * @return Integer[][]
+     */
+    function levelOrder($root) {
+        $array = array();
+         $this->levelOrderTraverse($root,0,$array);
+         return $array;
+
+    }
+     private function levelOrderTraverse($root,$depth,&$array) {
+        if($root==null)  return ;
+
+        if(count($array)<=$depth){
+            array_push($array, []);
+            array_push($array[$depth], $root->val);
+        }else{
+            array_push($array[$depth], $root->val);
+        }
+
+        $this->levelOrderTraverse($root->left,$depth+1,$array);
+        $this->levelOrderTraverse($root->right,$depth+1,$array);
+    }
+
+
+}
