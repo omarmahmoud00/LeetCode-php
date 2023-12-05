@@ -1,0 +1,70 @@
+class Solution {
+
+    /**
+     * @param String[][] $board
+     * @return Boolean
+     */
+    function isValidSudoku($board) {
+
+        if($this->isValidRow($board) && $this->isValidColumn($board) 
+                             &&  $this->isValidSubBoxes($board)) return true;
+        
+
+        return false;
+    }
+
+    private function isValidRow($board) {
+        for ($i = 0; $i < 9; $i++) {
+            $arr = new SplFixedArray(9);
+            for ($j = 0; $j < 9; $j++) {
+                if ($board[$i][$j] != '.') {
+                    $index = intval($board[$i][$j]) - 1; 
+                    if ($arr[$index] == 1) {
+                        return false;
+                    } else {
+                        $arr[$index] = 1;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private function isValidColumn($board) {
+        for ($i = 0; $i < 9; $i++) {
+            $arr = new SplFixedArray(9);
+            for ($j = 0; $j < 9; $j++) {
+                if ($board[$j][$i] != '.') {
+                    $index = intval($board[$j][$i]) - 1; 
+                    if ($arr[$index] == 1) {
+                        return false;
+                    } else {
+                        $arr[$index] = 1;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private function isValidSubBoxes($board) {
+        for ($i = 0; $i < 9; $i += 3) {
+            for ($j = 0; $j < 9; $j += 3) {
+                $arr = new SplFixedArray(9);
+                for ($row = $i; $row < $i + 3; $row++) {
+                    for ($col = $j; $col < $j + 3; $col++) {
+                        if ($board[$row][$col] != '.') {
+                            $index = intval($board[$row][$col]) - 1; 
+                            if ($arr[$index] == 1) {
+                                return false;
+                            } else {
+                                $arr[$index] = 1;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}
