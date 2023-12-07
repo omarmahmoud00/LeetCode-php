@@ -1,0 +1,48 @@
+/**
+ * Definition for a singly-linked list.
+ * class ListNode {
+ *     public $val = 0;
+ *     public $next = null;
+ *     function __construct($val = 0, $next = null) {
+ *         $this->val = $val;
+ *         $this->next = $next;
+ *     }
+ * }
+ */
+class Solution {
+
+    /**
+     * @param ListNode $head
+     * @return ListNode
+     */
+    function deleteDuplicates($head) {
+      if ($head == null || $head->next == null) {
+            return $head;
+        }
+        
+         $new_head = new ListNode();
+        $new_head->next = $head;
+
+        $temp = $head;
+        $prev = $new_head;
+   
+              
+        while ($temp != null) {
+            while ($temp->next != null && $temp->next->val == $temp->val) {
+                $temp = $temp->next;
+            }
+            
+          if ($prev->next === $temp) {
+                $prev = $prev->next;
+            } else {
+             
+                $prev->next = $temp->next;
+            }
+
+
+            $temp = $temp->next;
+        }
+
+        return $new_head->next;
+    }
+}
