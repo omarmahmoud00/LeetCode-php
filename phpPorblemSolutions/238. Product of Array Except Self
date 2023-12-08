@@ -1,0 +1,31 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer[]
+     */
+    function productExceptSelf($nums) {
+        $size = count($nums);
+        $pre = new SplFixedArray($size);
+        $after = new SplFixedArray($size);
+        $ans = new SplFixedArray($size);
+ 
+        $pre[0] = 1;
+        $after[$size - 1] = 1;
+
+        for ($i = 1; $i < $size; $i++) {
+            $pre[$i] = $nums[$i - 1] * $pre[$i - 1];
+        } 
+
+        for ($j = $size - 2; $j >= 0; $j--) {
+            $after[$j] = $nums[$j + 1] * $after[$j + 1];
+        }
+
+        for ($i = 0; $i < $size; $i++) {
+            $ans[$i] = $pre[$i] * $after[$i];
+        }
+ 
+        return iterator_to_array($ans);
+    }
+    
+}
