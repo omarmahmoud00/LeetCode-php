@@ -1,0 +1,95 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Integer[]
+     */
+    private $most_freqs;
+    
+    function topKFrequent($nums, $k) {
+        $n = count($nums);
+        // if($n == 1) return $nums;
+        if($n==$k) return $nums;
+        
+        $this->most_freqs = [];
+        $array = [];
+ 
+        for ($i = 0; $i < $n; $i++) {
+            if (isset($array[$nums[$i]])) {
+                $array[$nums[$i]]++;
+            } else {
+                $array[$nums[$i]] = 1;
+            }
+ 
+            $this->setFreq($nums[$i], $array[$nums[$i]], $k);
+        }
+        
+        
+        return array_keys($this->most_freqs);
+    }
+
+    private function setFreq($num, $freq, $k) {
+        
+        if (isset($this->most_freqs[$num])) {
+            $this->most_freqs[$num] = $freq;
+        } else {
+            
+            if (count($this->most_freqs) < $k) {
+                $this->most_freqs[$num] = $freq;
+            } else {
+                
+                $min_freq = min($this->most_freqs);
+                if ($freq > $min_freq) {
+                   
+                    foreach ($this->most_freqs as $key => $value) {
+                        if ($value == $min_freq) {
+                            unset($this->most_freqs[$key]);
+                            break;
+                        }
+                    }
+                    $this->most_freqs[$num] = $freq;
+                }
+            }
+        }
+
+        
+        arsort($this->most_freqs);
+    }
+}
+/////////////////////////////////////////////////////////////////////
+better sol 
+
+class Solution {
+    /**
+     * Returns the top k frequent elements from the array $nums.
+     *
+     * @param Integer[] $nums
+     * @param Integer $k
+     * @return Integer[]
+     */
+    function topKFrequent($nums, $k) {
+        $n = count($nums);
+         if ($n == $k) return $nums;
+ 
+        $freqMap = [];
+        foreach ($nums as $num) {
+            if (isset($freqMap[$num])) {
+                $freqMap[$num]++;
+            } else {
+                $freqMap[$num] = 1;
+            }
+        }
+ 
+        arsort($freqMap);
+
+   
+        $result = [];
+        foreach ($freqMap as $num => $freq) {
+            $result[] = $num;
+            if (count($result) == $k) break; 
+        }
+
+        return $result;
+    }
+}
