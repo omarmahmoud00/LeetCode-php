@@ -1,0 +1,39 @@
+class Solution {
+
+    private $result;
+    private $length;
+
+    /**
+     * @param String $s
+     * @return String[]
+     */
+    function letterCasePermutation($s) {
+ 
+            $this->length =strlen($s);
+             $this->result =[];
+          $this->letterCasePermutationRec(strtolower($s),'',0);
+          return  $this->result;
+
+    } 
+
+    function letterCasePermutationRec($s,$sub,$index){
+     if (strlen($sub) == $this->length) {
+            if (!in_array($sub, $this->result)) {
+                $this->result[] = $sub;
+            }
+            return;
+        }
+
+       
+             $char = $s[$index];
+             if(!is_int($char)){
+            $this->letterCasePermutationRec($s,($sub.strtolower($char)),$index+1);
+             $this->letterCasePermutationRec($s,($sub.strtoupper($char)),$index+1);
+                
+            } else{
+           $this->letterCasePermutationRec($s,($sub.$char),$index+1);
+
+            }
+    }
+
+}
