@@ -1,0 +1,76 @@
+class Solution {
+    private $maxIslands=0;
+    /**
+     * @param Integer[][] $grid
+     * @return Integer
+     */
+    function maxAreaOfIsland($grid) {
+
+    $m = count($grid);
+    $n = count($grid[0]);
+
+        for($i=0;$i<$m;$i++){
+            for($j=0;$j<$n;$j++){
+                if($grid[$i][$j]==1){
+                    $this->maxAreaOfIslandBFS($i,$j,$grid,$m,$n);
+                }
+            }
+        }
+
+        return  $this->maxIslands;
+        
+    }
+
+   private function maxAreaOfIslandBFS($i,$j,&$grid,$m,$n){
+        $q = new SplQueue();
+        $numsOfIslands=0;
+        $q->enqueue(
+            ['i'=>$i,
+            'j'=>$j,]
+        );
+       $numsOfIslands+=1; 
+       $grid[$i][$j]=0;
+       while(!$q->isEmpty()){
+        $position = $q->dequeue();
+        $newI = $position['i'];
+        $newJ = $position['j'];
+         if( $newJ + 1 < $n && $grid[$newI][($newJ+1)]==1 ){
+                    $q->enqueue(
+                    ['i'=>$newI,
+                    'j'=>$newJ+1,]
+                );
+            $numsOfIslands+=1; 
+            $grid[$newI][($newJ+1)]=0;
+            
+         }
+          if($newI + 1 < $m && $grid[($newI+1)][($newJ)]==1){
+                     $q->enqueue(
+                    ['i'=>$newI+1,
+                    'j'=>$newJ,]
+                );
+            $numsOfIslands+=1; 
+            $grid[($newI+1)][$newJ]=0; 
+
+         }
+          if($newI - 1 >= 0 && $grid[($newI-1)][($newJ)]==1){
+                     $q->enqueue(
+                    ['i'=>$newI-1,
+                    'j'=>$newJ,]
+                );
+            $numsOfIslands+=1; 
+            $grid[($newI-1)][$newJ]=0; 
+         }
+            if ($newJ - 1 >= 0 && $grid[$newI][$newJ - 1] == 1) {
+                $q->enqueue(['i' => $newI, 'j' => $newJ - 1]);
+                $numsOfIslands += 1;
+                $grid[$newI][$newJ - 1] = 0;
+            }
+
+
+       }
+
+       $this->maxIslands = max($this->maxIslands,$numsOfIslands);
+   } 
+
+
+}
