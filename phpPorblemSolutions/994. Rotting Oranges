@@ -1,0 +1,69 @@
+class Solution {
+    private $minutes;
+    private $queueOfRotttens;
+
+    /**
+     * @param Integer[][] $grid
+     * @return Integer
+     */
+    function orangesRotting($grid) {
+        $this->minutes = 0;
+        $this->queueOfRotttens = new SplQueue();
+        
+        $m = count($grid);
+        $n = count($grid[0]);
+        $isThereFresh = false;
+
+        for ($i = 0; $i < $m; $i++) {
+            for ($j = 0; $j < $n; $j++) {
+                if ($grid[$i][$j] == 2) {
+                    $this->queueOfRotttens->enqueue(['i' => $i, 'j' => $j]);
+                } elseif ($grid[$i][$j] == 1) {
+                    $isThereFresh = true;
+                }
+            }
+        }
+ 
+        if (!$isThereFresh) return 0;
+
+  
+        $this->orangesRottingBFS($grid, $m, $n);
+
+ 
+        foreach ($grid as $row) {
+            if (in_array(1, $row)) return -1;
+        }
+
+        return $this->minutes;
+    }
+
+    private function orangesRottingBFS(&$grid, $m, $n) {
+        $directions = [[0, 1], [1, 0], [0, -1], [-1, 0]];
+
+        while (!$this->queueOfRotttens->isEmpty()) {
+            $changes = false;
+            $size = $this->queueOfRotttens->count();
+            
+ 
+            for ($i = 0; $i < $size; $i++) {
+                $position = $this->queueOfRotttens->dequeue();
+                $newI = $position['i'];
+                $newJ = $position['j'];
+                
+                
+                foreach ($directions as $dir) {
+                    $nextI = $newI + $dir[0];
+                    $nextJ = $newJ + $dir[1];
+                    
+                    if ($nextI >= 0 && $nextI < $m && $nextJ >= 0 && $nextJ < $n && $grid[$nextI][$nextJ] == 1) {
+                        $grid[$nextI][$nextJ] = 2;
+                        $this->queueOfRotttens->enqueue(['i' => $nextI, 'j' => $nextJ]);
+                        $changes = true;
+                    }
+                }
+            }
+
+            if ($changes) $this->minutes += 1;
+        }
+    }
+}
