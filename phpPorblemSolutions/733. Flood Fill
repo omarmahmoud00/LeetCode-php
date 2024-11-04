@@ -1,0 +1,66 @@
+class Solution {
+
+    /**
+     * @param Integer[][] $image
+     * @param Integer $sr
+     * @param Integer $sc
+     * @param Integer $color
+     * @return Integer[][]
+     */
+    function floodFill($image, $sr, $sc, $color) {
+        $startingPixel = $image[$sr][$sc];
+         if ($startingPixel == $color) {
+            return $image;
+        }
+        $this->floodFillBFS( $image,$startingPixel, $sr, $sc, $color);
+        return $image;
+    }
+
+    function floodFillBFS(&$image,$startingPixel, $sr, $sc, $color){
+        $m = count($image);
+        $n = count($image[0]);
+        $q = new SplQueue();
+        $q->enqueue([
+            'i'=>$sr,
+            'j'=>$sc,
+        ]);
+       $image[$sr][$sc] = $color;
+        while(!$q->isEmpty()){
+           $position = $q->dequeue(); 
+           $newI = $position['i']; 
+           $newJ =$position['j']; 
+           if($newJ+1<$n &&$image[$newI][$newJ+1]==$startingPixel){
+            $q->enqueue([
+                'i'=>$newI,
+                'j'=>($newJ+1),
+            ]);
+             $image[$newI][($newJ+1)] = $color;
+
+           }
+           if($newJ-1>=0 &&$image[$newI][$newJ-1]==$startingPixel){
+              $q->enqueue([
+                'i'=>$newI,
+                'j'=>($newJ-1),
+            ]);
+             $image[$newI][($newJ-1)] = $color;
+           }
+           if($newI+1<$m &&$image[$newI+1][$newJ]==$startingPixel){
+             $q->enqueue([
+                'i'=>$newI+1,
+                'j'=>($newJ),
+            ]);
+             $image[$newI+1][($newJ)] = $color;
+           }
+            if($newI-1>=0 &&$image[$newI-1][$newJ]==$startingPixel){
+                 $q->enqueue([
+                'i'=>$newI-1,
+                'j'=>($newJ),
+            ]);
+             $image[$newI-1][($newJ)] = $color;
+           }
+           
+        }
+
+
+    }
+}
