@@ -1,0 +1,28 @@
+class Solution {
+    private $result;
+
+    /**
+     * @param Integer[][] $graph
+     * @return Integer[][]
+     */
+    function allPathsSourceTarget($graph) {
+        $n = count($graph);
+        $this->result = [];
+        $this->allPathsSourceTargetDFS($graph, 0, $n - 1, [0]);
+        return $this->result;
+    }
+
+    private function allPathsSourceTargetDFS($graph, $node, $target, $currentPath) {
+    
+        if ($node == $target) {
+            $this->result[] = $currentPath;
+            return;
+        }
+ 
+        foreach ($graph[$node] as $neighbor) {
+            $currentPath[] = $neighbor;  
+            $this->allPathsSourceTargetDFS($graph, $neighbor, $target, $currentPath);
+            array_pop($currentPath);  
+        }
+    }
+}
