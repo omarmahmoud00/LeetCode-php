@@ -1,0 +1,26 @@
+class Solution {
+
+    /**
+     * @param Integer[][] $edges
+     * @return Integer
+     */
+    function findCenter($edges) {
+        $map = [];
+        
+        foreach ($edges as $edge) {
+            foreach ($edge as $node) {
+                if (isset($map[$node])) {
+                    $map[$node]++;
+                } else {
+                    $map[$node] = 1;
+                }
+ 
+                if ($map[$node] > 1) {
+                    return $node;
+                }
+            }
+        }
+        
+      
+    }
+}
