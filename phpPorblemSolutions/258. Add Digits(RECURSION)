@@ -1,0 +1,16 @@
+class Solution {
+
+    /**
+     * @param Integer $num
+     * @return Integer
+     */
+    function addDigits($num) {
+        if ($num < 10) {
+            return $num;  
+        }
+
+        $sum  = $num % 10 + $this->addDigits(intdiv($num, 10));  
+
+        return $this->addDigits($sum);   
+    }
+}
