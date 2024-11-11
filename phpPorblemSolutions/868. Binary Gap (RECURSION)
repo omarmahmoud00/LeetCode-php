@@ -1,0 +1,32 @@
+class Solution {
+    private $longest;
+
+    /**
+     * @param Integer $n
+     * @return Integer
+     */
+    function binaryGap($n) {
+        $bin = decbin($n);
+        $this->longest = 0;
+        $this->binaryGapRec($bin, 0, 0, false);
+        return $this->longest;
+    }
+
+    private function binaryGapRec($bin, $i, $currentGap, $foundOne) {
+        if ($i == strlen($bin)) {
+            return;
+        }
+
+        if ($bin[$i] == '1') {
+            if ($foundOne && $currentGap > $this->longest) {
+                $this->longest = $currentGap; 
+            }
+            $currentGap = 1;
+            $foundOne = true; 
+        } elseif ($foundOne) {
+            $currentGap++; 
+        }
+
+        $this->binaryGapRec($bin, $i + 1, $currentGap, $foundOne);
+    }
+}
