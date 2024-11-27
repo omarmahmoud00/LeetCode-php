@@ -1,0 +1,91 @@
+class Solution {
+
+    /**
+     * @param Integer $numCourses
+     * @param Integer[][] $prerequisites
+     * @return Integer[]
+     */
+
+    function findOrder($numCourses, $prerequisites) {
+        $graph = [];    
+    
+        $this->prepare($numCourses, $graph, $prerequisites); 
+     
+
+        $visited = [];
+        $visited_for_topological = [];
+        $tracking = [];
+        $final_result = [];
+        for ($i = 0; $i < $numCourses; $i++) { 
+            $visited[] = 0;
+            $tracking[] = 0;
+            $visited_for_topological[] = 0;
+        }
+      
+        $result = 0;
+        foreach ($graph as $node => $neighbors) {
+            if (!$visited[$node]) {
+                $result = $this->checkIfCycled($graph, $node, $visited, $tracking);
+                if ($result) break;
+            }
+        }
+
+        if ($result) {
+            return [];
+        }
+
+        foreach ($graph as $node => $neighbors) {
+            if (!$visited_for_topological[$node]) {
+                $this->topologicalOrdering($graph, $node, $final_result, $visited_for_topological);
+            }
+        }
+
+        return array_reverse($final_result);
+    }
+
+    private function topologicalOrdering($graph, $node, &$final_result, &$visited_for_topological) {
+        if ($visited_for_topological[$node]) {
+            return;
+        }
+
+        $visited_for_topological[$node] = 1;
+
+        foreach ($graph[$node] as $neighbor) {
+            if (!$visited_for_topological[$neighbor]) {
+                $this->topologicalOrdering($graph, $neighbor, $final_result, $visited_for_topological);
+            }
+        }
+
+        $final_result[] = $node;
+    }
+
+    private function checkIfCycled($graph, $node, &$visited, &$tracking) {
+        if ($tracking[$node]) {
+            return true;
+        }
+        if ($visited[$node]) {
+            return false;
+        }
+        $tracking[$node] = 1;
+
+        foreach ($graph[$node] as $neighbor) {
+            if ($this->checkIfCycled($graph, $neighbor, $visited, $tracking)) return true;
+        }
+
+        $tracking[$node] = 0;
+        $visited[$node] = 1;
+        return false;
+    }
+
+    private function prepare($numCourses, &$graph, $prerequisites) {
+        for ($i = 0; $i < $numCourses; $i++) {
+            $graph[$i] = [];
+        }
+    
+        foreach ($prerequisites as $prerequisite) {
+            $graph[$prerequisite[1]][] = $prerequisite[0];
+        }
+    }
+
+    
+}
