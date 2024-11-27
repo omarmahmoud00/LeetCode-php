@@ -1,0 +1,37 @@
+class Solution {
+
+    /**
+     * @param Integer[][] $times
+     * @param Integer $n
+     * @param Integer $k
+     * @return Integer
+     */
+    function networkDelayTime($times, $n, $k) {
+        $values = array_fill(1,$n,PHP_INT_MAX);
+        $graph = [];
+       
+         foreach ($times as $time) {
+                $graph[$time[0]][] = [$time[1],$time[2]];
+         }
+         $values[$k] = 0;
+// [[1,2,1]]
+         $this->dfs($graph,$k,$values,0);
+         $maxTime = max($values);
+         return $maxTime == PHP_INT_MAX ? -1 : $maxTime;
+    }
+    private function dfs($graph,$node,&$values,$current) {
+        if(!isset($graph[$node])) return;
+
+        foreach ($graph[$node] as [$neighbor,$time]) {
+           $check_time = $current + $time;
+             if($check_time<$values[$neighbor])  {
+                $values[$neighbor] = $check_time;
+             $this->dfs($graph, $neighbor, $values, $check_time);
+             }  
+
+        }
+
+    }
+
+     
+}
