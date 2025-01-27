@@ -1,0 +1,26 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer
+     */
+    function findMin($nums) {
+        $start = 0;
+        $size = count($nums);
+        $end = $size - 1;
+ 
+        if ($size === 1) return $nums[0];
+
+        while ($start < $end) {
+            $mid = intdiv($start + $end, 2); 
+            
+            if ($nums[$mid] > $nums[$end]) {
+                $start = $mid + 1;
+            } else {
+                $end = $mid;
+            }
+        }
+ 
+        return $nums[$start];
+    }
+}
