@@ -1,0 +1,45 @@
+class Solution {
+
+    /**
+     * @param Integer $numRows
+     * @return Integer[][]
+     */
+    function generate($numRows) {
+        $array = [];
+        $this->preparePascal($array,$numRows);
+
+        for($i=0;$i<$numRows;$i++){
+            $m = count($array[$i]);
+
+            for($j=0; $j<$m;$j++){
+                if(($i-1)<0||($j-1)<0){
+                    $array[$i][$j]=1;
+                    continue;
+                }
+                $left_i = $i-1;
+                $left_j = $j-1;
+                $right_i = $i-1;
+                $array[$i][$j]= ($array[$left_i][$left_j]) +    
+                                 ($array[$right_i][$j]);
+            }
+        }
+
+    return $array;
+
+    }
+
+
+   private function preparePascal(&$array,$numRows){
+
+       for($i=0;$i<$numRows;$i++){
+                 $array[$i] = array_fill(0, $i+1 , 1); 
+
+       }
+
+       return $array;
+
+
+   }
+
+
+}
