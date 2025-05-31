@@ -1,0 +1,52 @@
+class Solution {
+
+    /**
+     * @param Integer[] $nums
+     * @return Integer[][]
+     */
+    function threeSum($nums) {
+        sort($nums);
+        $n = count($nums);
+        $threeSum = [];
+
+        for ($first = 0; $first < $n - 2; $first++) {
+            if ($first > 0 && $nums[$first] == $nums[$first - 1]) continue;  
+
+            for ($second = $first + 1; $second < $n - 1; $second++) {
+                if ($second > $first + 1 && $nums[$second] == $nums[$second - 1]) continue; 
+
+                $target_num = -($nums[$first] + $nums[$second]);
+                $exists = $this->binarySearch($target_num, $second + 1, $nums, $n);
+
+                if ($exists) {
+                    $triplet = [$nums[$first], $nums[$second], $target_num];
+                    sort($triplet);
+                    $key = json_encode($triplet);
+                    $threeSum[$key] = $triplet;
+                }
+            }
+        }
+
+        return array_values($threeSum);
+    }
+
+    private function binarySearch($target_num, $left, $nums, $n) {
+        $right = $n - 1;
+        while ($left <= $right) {
+            $middle = intdiv($left + $right, 2);
+            if ($nums[$middle] == $target_num) return true;
+            else if ($nums[$middle] > $target_num) {
+                $right = $middle - 1;
+            } else {
+                $left = $middle + 1;
+            }
+        }
+        return false;
+    }
+
+    private function prepareKey($num1, $num2, $num3) {
+        $array = [$num1, $num2, $num3];
+        sort($array);
+        return json_encode($array);
+    }
+}
